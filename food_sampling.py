@@ -84,12 +84,22 @@ def print_info():
 
 print_info()
 
+
+def clear_line():
+    print('\033[1A\033[K', end='')
+
+
 # Start voting.
 weights = []
+ielector = 1
+print(" ========= Voting Start =========")
 while True:
-    vote = getpass(f"\n>>> Vote for (at most {max_choices}): ").strip()
+    prompt = "(Voter " + str(ielector) + ") Vote for your choice: "
+    vote = input(prompt).lower()
+    clear_line()
 
     if vote == "-1":
+        print(" ========= Voting Done  =========")
         break
 
     elif vote == "-t":
@@ -123,7 +133,10 @@ while True:
 
         else:
             weights.append(vote)
+            print(' >> ' + str(ielector) + ' voted.')
+            ielector += 1
 
+print("Total Electors: " + str(ielector - 1))
 # Calculating weights.
 if len(weights) == 0:
     print("\n# No weights specified -> uniform weights.")
